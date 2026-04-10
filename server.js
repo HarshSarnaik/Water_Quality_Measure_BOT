@@ -5,31 +5,39 @@ const app = express();
 
 // ================= MIDDLEWARE =================
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.urlencoded({ extended: true }));
+
+// ✅ SERVE FRONTEND PROPERLY
+app.use(express.static(path.join(__dirname)));
 
 // ================= IN-MEMORY STORAGE =================
 let latestData = null;
 let latestControl = { x: 0, y: 0 };
 
-app.use(express.urlencoded({ extended: true }));
 // ================= ROUTES =================
 
-// 🔥 ROOT (to check if server is alive)
+// 🔥 HEALTH CHECK (Render needs this stable)
+app.get("/health", (req, res) => {
+    res.status(200).send("OK");
+});
+
+// 🔥 ROOT (force index.html)
 app.get("/", (req, res) => {
-    res.send("🚀 Water Quality Server Running");
+    res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // ================= SENSOR DATA =================
 
 // RECEIVE DATA FROM ESP32
 app.post("/data", (req, res) => {
-    const data = req.body;
-
-    console.log("📡 DATA RECEIVED:", data);
-
-    latestData = data;
-
-    res.status(200).send("OK");
+    try {
+        latestData = req.body;
+        console.log("📡 DATA:", latestData);
+        res.status(200).send("OK");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("ERROR");
+    }
 });
 
 // SEND DATA TO DASHBOARD
@@ -37,30 +45,28 @@ app.get("/latest", (req, res) => {
     res.json(latestData || {});
 });
 
-// ================= JOYSTICK CONTROL =================
+// ================= JOYSTICK =================
 
-// RECEIVE FROM DASHBOARD
+// RECEIVE CONTROL
 app.post("/control", (req, res) => {
-    latestControl = req.body;
-
-    console.log("🎮 CONTROL RECEIVED:", latestControl);
-
-    res.status(200).send("OK");
+    try {
+        latestControl = req.body;
+        console.log("🎮 CONTROL:", latestControl);
+        res.status(200).send("OK");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("ERROR");
+    }
 });
 
-// SEND TO ESP32
+// SEND CONTROL TO ESP32
 app.get("/control", (req, res) => {
     res.json(latestControl);
-});
-
-// ================= HEALTH CHECK =================
-app.get("/health", (req, res) => {
-    res.json({ status: "OK" });
 });
 
 // ================= START SERVER =================
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
