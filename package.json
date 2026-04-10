@@ -7,13 +7,9 @@
     "start": "node server.js"
   },
   "keywords": ["iot", "esp32", "dashboard", "water-monitoring"],
-  "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^5.2.1",
-    "dayjs": "^1.11.20",
-    "xlsx": "^0.18.5",
-    "mongodb": "^6.6.0"
+    "express": "^4.18.2"
   },
   "engines": {
     "node": ">=18"
