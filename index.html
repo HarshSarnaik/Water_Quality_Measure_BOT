@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Water Quality Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- LIBS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LIVE DATA -->
+    <div class="card live">
+        <h3>📡 LIVE DATA</h3>
+
+        <div class="data-block">
+            <div class="data-row">
+                <span class="label">LATITUDE</span>
+                <span class="value" id="lat">--</span>
+            </div>
+
+            <div class="data-row">
+                <span class="label">LONGITUDE</span>
+                <span class="value" id="lon">--</span>
+            </div>
+
+            <div class="data-row">
+                <span class="label">pH LEVEL</span>
+                <span class="value highlight" id="ph">--</span>
+            </div>
+
+            <div class="data-row">
+                <span class="label">TURBIDITY</span>
+                <span class="value highlight2" id="turbidity">--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- LOGS -->
+    <div class="card logs">
+        <h3>📜 SYSTEM LOGS</h3>
+        <div id="logBox"></div>
+    </div>
+
+    <!-- MAP -->
+    <div class="card map">
+        <h3>🗺 NAVIGATION MAP</h3>
+        <div id="map"></div>
+    </div>
+
+    <!-- GRAPH -->
+    <div class="card graph">
+        <h3>📊 WATER ANALYTICS</h3>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <!-- JOYSTICK -->
+    <div class="card joystick">
+        <h3>🎮 CONTROL SYSTEM</h3>
+
+        <div class="joy-wrapper">
+            <div class="joy">
+                <div class="ring"></div>
+                <div id="stick"></div>
+            </div>
+
+            <div class="control-label">
+                <span>← MOVE →</span>
+                <span>↑ ↓</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ALERTS -->
+    <div class="card alerts">
+        <h3>⚠ ALERTS & STATUS</h3>
+        <div id="alertsBox" class="alert-text">SYSTEM READY</div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

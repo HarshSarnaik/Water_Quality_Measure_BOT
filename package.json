@@ -1,0 +1,21 @@
+{
+  "name": "water-quality-dashboard",
+  "version": "1.0.0",
+  "description": "IoT Water Monitoring Dashboard with ESP32 + Web Control",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["iot", "esp32", "dashboard", "water-monitoring"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1",
+    "dayjs": "^1.11.20",
+    "xlsx": "^0.18.5",
+    "mongodb": "^6.6.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
