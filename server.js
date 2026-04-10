@@ -11,6 +11,7 @@ app.use(express.static(__dirname));
 let latestData = null;
 let latestControl = { x: 0, y: 0 };
 
+app.use(express.urlencoded({ extended: true }));
 // ================= ROUTES =================
 
 // 🔥 ROOT (to check if server is alive)
